@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const pool = require('../models'); // Database connection
+const { where } = require('sequelize');
+const token = require('../Utils/jwt')
 
 
 exports.NewBarbeiro = async (req, res) => {
@@ -55,3 +57,62 @@ exports.listBarbeiro = async (req,res) => {
         })
     })
 };
+
+
+exports.AtualizarBarbeiro = async (req,res) => {
+    const id = req.params.id;
+    const {name, email, phone, password, specialty, experience} = req.body;
+
+    // Encrypt password
+    const hashedPassword = await bcrypt.hash(password, 10);
+     
+    await pool.Barber.update({name, email, phone, password:hashedPassword, specialty, experience}, {where: {id: id}}).then((dados) => {
+        res.status(200).json({
+            msg: 'Barbeiro Atualizado com Sucesso',
+            dados
+        })
+    }).catch((err) => {
+        res.status(500).json({
+            msg: 'Erro ao Atualizar Barbeiro'
+        })
+    })
+}
+
+
+exports.DeleteBarbeiro = async (req,res) => {
+    const id = req.params.id;
+    await pool.Barber.destroy({where: {id: id}}).then(() =>{
+        res.status(200).json({
+            msg: 'Barbeiro Deletado com Sucesso'
+            })
+    }).catch((err) => {
+        res.status(500).json({
+            msg: 'Erro ao Deletar Barbeiro'
+        })
+    })
+}
+
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        // Procurando o barbeiro com o email informado
+        const barber = await pool.Barber.findOne({ where: { email } });
+        if (!barber) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+        // Comparando a senha fornecida com o hash da senha no banco de dados
+        const isValid = await bcrypt.compare(password, barber.password);
+        if (!isValid) {
+            return res.status(401).json({ error: 'Invalid email or password' });
+        }
+        // Gerando o token (ajuste conforme sua implementação de token)
+        const tokens = token.generateToken({ id: barber.id, email: barber.email });
+        // Respondendo com o token
+        res.json({ tokens });
+    } catch (err) {
+        res.status(500).json({ error: 'Erro no servidor', details: err.message });
+    }
+};
+   
+  
+
