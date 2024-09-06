@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Defina suas rotas aqui
 // app.use('/api', require('./routes/api'));
-app.use('', rotabarbeiro);
+app.use('/', rotabarbeiro);
 
 
 

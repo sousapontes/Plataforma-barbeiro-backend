@@ -3,7 +3,7 @@ const pool = require('../models'); // Database connection
 
 
 exports.NewBarbeiro = async (req, res) => {
-    const { name, email, phone, password, especialty, experience } = req.body;
+    const { name, email, phone, password, specialty, experience } = req.body;
     if(!name){
         return res.send('campo nome obrigatorio!')
     }
@@ -16,7 +16,7 @@ exports.NewBarbeiro = async (req, res) => {
     if(!password){
         return res.send('campo senha obrigatoria!')
     }
-    if(!especialty){
+    if(!specialty){
         return res.send('campo especialidade obrigatorio!')
     }
     if(!experience){
@@ -36,7 +36,7 @@ exports.NewBarbeiro = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Insert barber into database
-        const newBarbeiro = await pool.Barber.create({name, email, phone, password : hashedPassword, especialty, experience})
+        const newBarbeiro = await pool.Barber.create({name, email, phone, password : hashedPassword, specialty, experience})
             return res.send('cadastrado com sucesso!') 
             return newBarbeiro
         
@@ -46,3 +46,12 @@ exports.NewBarbeiro = async (req, res) => {
     }
 };
 
+
+exports.listBarbeiro = async (req,res) => {
+    await pool.Barber.findAll().then((listabarbers) => {
+        res.json({
+            msg:'Listas de Barbeiros Na Plataforma',
+            listabarbers
+        })
+    })
+};
