@@ -5,7 +5,7 @@ const token = require('../Utils/jwt')
 
 
 exports.NewBarbeiro = async (req, res) => {
-    const { name, email, phone, password, specialty, experience } = req.body;
+    const { name, email, phone, specialty, experience, password, password2 } = req.body;
     if(!name){
         return res.send('campo nome obrigatorio!')
     }
@@ -15,14 +15,20 @@ exports.NewBarbeiro = async (req, res) => {
     if(!phone){
         return res.send('campo telefone obrigatorio!')
     }
-    if(!password){
-        return res.send('campo senha obrigatoria!')
-    }
     if(!specialty){
         return res.send('campo especialidade obrigatorio!')
     }
     if(!experience){
         return res.send('campo experiencia obrigatorio!')
+    }
+    if(!password){
+        return res.send('campo senha obrigatoria!')
+    }
+    if(!password2){
+        return res.send('campo senha obrigatoria!')
+    }
+    if(password !== password2){
+        return res.send('senhas diferentes!')
     }
     
     try {
