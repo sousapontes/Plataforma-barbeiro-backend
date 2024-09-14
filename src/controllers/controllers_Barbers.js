@@ -119,6 +119,53 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Erro no servidor', details: err.message });
     }
 };
-   
+
+
   
+// POST /availability: Para o barbeiro definir seus horários de trabalho.
+
+exports.availability = async (req, res) => {
+    const { barber_id, day, start_time, end_time } = req.body;
+
+    if(!barber_id){
+        return res.send('campo obrigatorio!')
+    }
+    if(!day){
+        return res.send('campo obrigatorio!')
+    }
+    if(!start_time){
+        return res.send('campo obrigatorio!')
+    }
+    if(!end_time){
+        return res.send('campo obrigatoria!')
+    }
+    
+    try {
+        const availability = await pool.Barber.create({
+            barber_id,
+            day,
+            start_time,
+            end_time,
+        });
+        return res.status(201).json(availability);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao criar disponibilidade' });
+    }
+};
+
+
+// GET /availability: Para o barbeiro visualizar seus horários disponíveis.
+
+exports.ViewAvailability = async (req, res) => {
+    const barber_id = req.params.id; // assuming req.barber is set by middleware
+
+    try {
+        const availabilities = await pool.Barber.findAll({
+            where: { barber_id },
+        });
+        res.json(availabilities);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar disponibilidade' });
+    }
+};
 
