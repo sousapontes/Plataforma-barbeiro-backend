@@ -33,7 +33,7 @@ exports.NewBarbeiro = async (req, res) => {
     
     try {
         // Check if email already exists
-        const userExists = await pool.Barber.findOne({ where: { email: email } });
+        const userExists = await pool.Login.findOne({ where: { email: email } });
         const NameUserExists = await pool.Barber.findOne({ where: { name: name } });
         if (userExists || NameUserExists) {
             return res.status(400).json({ msg: 'Email and Name already registered' });

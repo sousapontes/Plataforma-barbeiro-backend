@@ -14,17 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Barbearia.init({
-    nome_barbearia: DataTypes.STRING,
-    contacto_barbearia: DataTypes.STRING,
-    imagem_logo_barbearia: DataTypes.STRING,
-    localizacao_barbearia: DataTypes.STRING,
-    complemento_localizacao_barbearia: DataTypes.STRING,
-    dias_funcionamento: DataTypes.TEXT,
-    horarios_atendimento: DataTypes.TEXT,
-    avaliacao: DataTypes.FLOAT
+    name_barbearia: DataTypes.STRING,
+    Localizacao_Barbearia: DataTypes.STRING,
+    contacto_Barbearia: DataTypes.STRING,
+    Descricao_Localizacao: DataTypes.STRING,
+    Dias_Funcionamento: DataTypes.STRING,
+    Horario_Atendimento: DataTypes.STRING,
+    Metodos_Pagamento: DataTypes.STRING,
+    Descricao_Barbearia: DataTypes.TEXT,
+    Avaliacao_Barbearia: DataTypes.FLOAT,
+    Imagem_Logo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Barbearia',
+    timestamps:true
   });
   return Barbearia;
 };

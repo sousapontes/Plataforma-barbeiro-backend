@@ -9,29 +9,35 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nome_barbearia: {
+      name_barbearia: {
         type: Sequelize.STRING
       },
-      contacto_barbearia: {
+      Localizacao_Barbearia: {
         type: Sequelize.STRING
       },
-      imagem_logo_barbearia: {
+      contacto_Barbearia: {
         type: Sequelize.STRING
       },
-      localizacao_barbearia: {
+      Descricao_Localizacao: {
         type: Sequelize.STRING
       },
-      complemento_localizacao_barbearia: {
+      Dias_Funcionamento: {
         type: Sequelize.STRING
       },
-      dias_funcionamento: {
+      Horario_Atendimento: {
+        type: Sequelize.STRING
+      },
+      Metodos_Pagamento: {
+        type: Sequelize.STRING
+      },
+      Descricao_Barbearia: {
         type: Sequelize.TEXT
       },
-      horarios_atendimento: {
-        type: Sequelize.TEXT
-      },
-      avaliacao: {
+      Avaliacao_Barbearia: {
         type: Sequelize.FLOAT
+      },
+      Imagem_Logo: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

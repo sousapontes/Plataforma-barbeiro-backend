@@ -9,26 +9,41 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      name_barbeiro: {
         type: Sequelize.STRING
       },
-      email: {
+      Localizacao_Barbeario: {
         type: Sequelize.STRING
       },
-      phone: {
+      contacto_Barbeiro: {
         type: Sequelize.STRING
       },
-      password: {
+      Descricao_Barbeiro: {
         type: Sequelize.STRING
       },
-      specialty: {
+      Data_Nascimento: {
+        type: Sequelize.DATE
+      },
+      contacto: {
         type: Sequelize.STRING
       },
-      experience: {
+      Link_Rede_Socias: {
+        type: Sequelize.STRING
+      },
+      Especialidade: {
+        type: Sequelize.STRING
+      },
+      Experiencia: {
         type: Sequelize.INTEGER
       },
-      isAvailable: {
+      Status_Disponibilidade: {
         type: Sequelize.BOOLEAN
+      },
+      Avaliacao_Barbeiro: {
+        type: Sequelize.FLOAT
+      },
+      Imagem_Logo: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
