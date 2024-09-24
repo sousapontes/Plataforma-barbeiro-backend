@@ -14,17 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Barber.init({
-    name_barbeiro: DataTypes.STRING,
-    Localizacao_Barbeario: DataTypes.STRING,
-    contacto_Barbeiro: DataTypes.STRING,
-    Descricao_Barbeiro: DataTypes.STRING,
-    Data_Nascimento: DataTypes.DATE,
-    contacto: DataTypes.STRING,
+    nome_barbeiro: DataTypes.STRING,
+    localizacao_barbeiro: DataTypes.STRING,
+    contacto_barbeiro: DataTypes.STRING,
+    descricao_barbeiro: DataTypes.STRING,
+    data_nascimento: DataTypes.DATE,
     Link_Rede_Socias: DataTypes.STRING,
-    Especialidade: DataTypes.STRING,
-    Experiencia: DataTypes.INTEGER,
-    Status_Disponibilidade: DataTypes.BOOLEAN,
-    Avaliacao_Barbeiro: DataTypes.FLOAT,
+    especialidade: DataTypes.STRING,
+    experiencia: DataTypes.INTEGER,
+    status_disponibilidade: DataTypes.BOOLEAN,
+    avaliacao_barbeiro: DataTypes.FLOAT,
     Imagem_Logo: DataTypes.STRING
   }, {
     sequelize,
