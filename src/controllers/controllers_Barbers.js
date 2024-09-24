@@ -4,12 +4,33 @@ const token = require('../Utils/jwt')
 
 
 exports.NewBarbeiro = async (req, res) => {
-    const { name_barbeiro, Localizacao_Barbeario, 
-        Descricao_Barbeiro, Data_Nascimento,  Especialidade,
-        Experiencia} = req.body;
-
-    if(!name_barbeiro || !Localizacao_Barbeario || !Descricao_Barbeiro || !Data_Nascimento || !Especialidade || !Experiencia){
-        return res.send('Campos obrigatorios!')
+    const { name, email, phone, password, specialty, experience } = req.body;
+    if(!name){
+        return res.send('campo nome obrigatorio!')
+    }
+    if(!email){
+        return res.send('campo email obrigatorio!')
+    }
+    if(!phone){
+        return res.send('campo telefone obrigatorio!')
+    }
+    if(!password){
+        return res.send('campo senha obrigatoria!')
+    }
+    if(!specialty){
+        return res.send('campo especialidade obrigatorio!')
+    }
+    if(!experience){
+        return res.send('campo experiencia obrigatorio!')
+    }
+    if(!password){
+        return res.send('campo senha obrigatoria!')
+    }
+    if(!password2){
+        return res.send('campo senha obrigatoria!')
+    }
+    if(password !== password2){
+        return res.send('senhas diferentes!')
     }
     
     try {
@@ -97,53 +118,6 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Erro no servidor', details: err.message });
     }
 };
-
-
-  
-// POST /availability: Para o barbeiro definir seus horários de trabalho.
-
-exports.availability = async (req, res) => {
-    const { barber_id, day, start_time, end_time } = req.body;
-
-    if(!barber_id){
-        return res.send('campo obrigatorio!')
-    }
-    if(!day){
-        return res.send('campo obrigatorio!')
-    }
-    if(!start_time){
-        return res.send('campo obrigatorio!')
-    }
-    if(!end_time){
-        return res.send('campo obrigatoria!')
-    }
-    
-    try {
-        const availability = await pool.Barber.create({
-            barber_id,
-            day,
-            start_time,
-            end_time,
-        });
-        return res.status(201).json(availability);
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao criar disponibilidade' });
-    }
-};
-
-
-// GET /availability: Para o barbeiro visualizar seus horários disponíveis.
-
-exports.ViewAvailability = async (req, res) => {
-    const barber_id = req.params.id; // assuming req.barber is set by middleware
-
-    try {
-        const availabilities = await pool.Barber.findAll({
-            where: { barber_id },
-        });
-        res.json(availabilities);
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar disponibilidade' });
-    }
-};
 */
+  
+

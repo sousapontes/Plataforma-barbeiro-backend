@@ -12,7 +12,6 @@ module.exports = {
       email: {
         type: Sequelize.STRING, // Corrigido para usar Sequelize.STRING
         allowNull: false,
-        unique: true,
         validate: {
           isEmail: true
         }
