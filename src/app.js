@@ -8,6 +8,7 @@ require('dotenv').config();
 // listas de importações do arquivos de rotas
 const rotasbarbeiro = require('./routes/routes_barbers.js')
 const rotaslogin = require('./routes/routes_login.js')
+const rotascliente = require('./routes/routes_cliente.js')
  
 
 const port = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ app.use(express.json());
 // app.use('/api', require('./routes/api'));
 app.use('/', rotasbarbeiro);
 app.use('/', rotaslogin);
+app.use('/', rotascliente);
 
 
 
