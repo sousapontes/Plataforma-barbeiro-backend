@@ -4,46 +4,24 @@ const token = require('../Utils/jwt')
 
 
 exports.NewBarbeiro = async (req, res) => {
-    const { name, email, phone, password, specialty, experience } = req.body;
-    if(!name){
-        return res.send('campo nome obrigatorio!')
-    }
-    if(!email){
-        return res.send('campo email obrigatorio!')
-    }
-    if(!phone){
-        return res.send('campo telefone obrigatorio!')
-    }
-    if(!password){
-        return res.send('campo senha obrigatoria!')
-    }
-    if(!specialty){
-        return res.send('campo especialidade obrigatorio!')
-    }
-    if(!experience){
-        return res.send('campo experiencia obrigatorio!')
-    }
-    if(!password){
-        return res.send('campo senha obrigatoria!')
-    }
-    if(!password2){
-        return res.send('campo senha obrigatoria!')
-    }
-    if(password !== password2){
-        return res.send('senhas diferentes!')
+    const { nome_barbeiro, localizacao_barbeiro, contacto_barbeiro, descricao_barbeiro, data_nascimento,
+        Link_Rede_Socias,especialidade, experiencia } = req.body;
+
+    if(!nome_barbeiro || !localizacao_barbeiro || !descricao_barbeiro || !data_nascimento || !experiencia){
+        return res.send('Preencha os campos obrigatórios!')
     }
     
     try {
-        // Check if email already exists
-        const NameUserExists = await pool.Barber.findOne({ where: {  name_barbeiro: name_barbeiro } });
+        // Check if nomes already exists
+        const NameUserExists = await pool.Barber.findOne({ where: {  nome_barbeiro: nome_barbeiro } });
         if ( NameUserExists) {
-            return res.status(400).json({ msg: 'Name already registered' });
+            return res.status(400).json({ msg: 'Dados inválidos' });
         }
         
         // Insert barber into database
-        const newBarbeiro = await pool.Barber.create({name_barbeiro, Localizacao_Barbeario, 
-            Descricao_Barbeiro, Data_Nascimento,  
-            Especialidade, Experiencia, })
+        const newBarbeiro = await pool.Barber.create({nome_barbeiro, localizacao_barbeiro, contacto_barbeiro,
+            descricao_barbeiro, data_nascimento, Link_Rede_Socias, especialidade, experiencia })
+
             return res.send('cadastrado com sucesso!') 
             return res.json(newBarbeiro)
         
@@ -51,6 +29,7 @@ exports.NewBarbeiro = async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server error');
     }
+   
 };
 
 /*
