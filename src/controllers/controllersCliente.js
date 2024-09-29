@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt')
 const pool = require('../models'); // Database connection
 const { where } = require('sequelize');
-const token = require('../Utils/jwt');
 
 exports.cadastroCliente = async (req,res) => {
     
@@ -63,14 +62,24 @@ exports.AtualizarCliente = async (req,res) => {
     })
 }
 
-exports.deletarCliente = async (req,res) => {
+exports.deletarCliente = async (req, res) => {
     const id = req.params.id;
-    await pool.Tabela_Clientes.destroy({where: {id: id}}).then((dados) =>{
-        res.status(200).json({msg:'Dados deletado com sucesso'});
-    }).catch(err,()=>{
-        res.status().json({err: 'Erro ao deletar os dados!'})
-    })
-}
+    try {
+        if(id <= 0){return res.send('id inválido.')}
+        
+        const cliente = await pool.Tabela_Clientes.destroy({where:{id}})
+
+        if(cliente){
+            return res.status(200).json('Dados eliminados com sucesso!')
+        }else{
+            return res.status(400).json('Dados não encontrados!')
+        } 
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+    
+};
+
 
 
 // Função para obter o histórico de serviços e agendamentos
