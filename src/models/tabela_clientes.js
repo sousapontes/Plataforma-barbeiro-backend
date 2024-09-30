@@ -1,30 +1,38 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Tabela_Clientes extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+  class Cliente extends Model {
     static associate(models) {
-      // define association here
+      Cliente.hasMany(models.Agendamento, { foreignKey: 'cliente_id' });
     }
   }
-  Tabela_Clientes.init({
-    Name_Cliente: DataTypes.STRING,
-    Email: DataTypes.STRING,
-    Contacto_Cliente: DataTypes.STRING,
-    Morada_Cliente: DataTypes.STRING,
-    Data_Nascimento: DataTypes.DATE,
-    Preferencia_Cliente: DataTypes.STRING,
-    Avaliacao: DataTypes.INTEGER,
-    password: DataTypes.STRING
+  Cliente.init({
+    name_cliente: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
+    },
+    contacto_cliente: DataTypes.STRING,
+    morada_cliente: DataTypes.STRING,
+    data_nascimento: DataTypes.DATE,
+    preferencia_cliente: DataTypes.STRING,
+    avaliacao: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {
     sequelize,
-    modelName: 'Tabela_Clientes',
+    modelName: 'Cliente',
   });
-  return Tabela_Clientes;
+  return Cliente;
 };

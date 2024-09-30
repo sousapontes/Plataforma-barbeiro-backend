@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const pool = require('../models'); // Database connection
+const { Op } = require('sequelize');
 const { where } = require('sequelize');
 
 exports.cadastroCliente = async (req,res) => {
@@ -86,7 +87,7 @@ exports.deletarCliente = async (req, res) => {
 exports.historicoAgendamentos = async (req, res) => {
     try {
         // ID do cliente autenticado
-        const clienteId = req.user.id;
+        const clienteId = req.params.id;
 
         // Buscar agendamentos do cliente com data anterior à data atual
         const historicoAgendamentos = await pool.Agendamento.findAll({
@@ -99,17 +100,17 @@ exports.historicoAgendamentos = async (req, res) => {
             },
             include: [
                 {
-                    model: Service,
+                    model: pool.Service,
                     as: 'servico',
                     attributes: ['tipo_servico', 'preço_serviço', 'Duração_Servico'],
                 },
                 {
-                    model: Barber,
+                    model: pool.Barber,
                     as: 'barbeiro',
                     attributes: ['nome_barbeiro', 'especialidade'],
                 },
                 {
-                    model: Barbearia,
+                    model: pool.Barbearia,
                     as: 'barbearia',
                     attributes: ['Nome_Barbearia', 'Localização_Barbearia'],
                 },
