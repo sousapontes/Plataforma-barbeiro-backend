@@ -1,7 +1,7 @@
 'use strict';
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Barbearia', {
       id: {
         allowNull: false,
@@ -28,7 +28,7 @@ module.exports = {
       dias_funcionamento: {
         type: Sequelize.TEXT
       },
-      horarios_atendimento: {
+      horario_atendimento: {
         type: Sequelize.TEXT
       },
       avaliacao: {
@@ -36,17 +36,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Barbearia');
   }
 };

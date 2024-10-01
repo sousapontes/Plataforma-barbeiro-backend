@@ -1,37 +1,36 @@
 'use strict';
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Tabela_Clientes', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Clientes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Name_Cliente: {
-        type: Sequelize.STRING,
-        allowNull: false
+      name_cliente: {
+        type: Sequelize.STRING
       },
-      Email: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },
-      Contacto_Cliente: {
+      contacto_cliente: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      Morada_Cliente: {
+      morada: {
         type: Sequelize.STRING
       },
-      Data_Nascimento: {
+      data_nascimento: {
         type: Sequelize.DATE
       },
-      Preferencia_Cliente: {
+      preferencia: {
         type: Sequelize.STRING
       },
-      Avaliacao: {
+      avaliacao: {
         type: Sequelize.INTEGER
       },
       password: {
@@ -40,17 +39,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Tabela_Clientes');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Clientes');
   }
 };

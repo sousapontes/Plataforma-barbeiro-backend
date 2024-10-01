@@ -1,7 +1,7 @@
 'use strict';
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Services', {
       id: {
         allowNull: false,
@@ -9,35 +9,33 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Tipo_Servico: {
+      tipo_servico: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      Duracao_Servico: {
+      duracao_servico: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      Preco_Servico: {
+      preco_servico: {
         type: Sequelize.DOUBLE,
         allowNull: false
       },
-      Ativo_Inativo: {
+      ativo_inativo: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Services');
   }
 };

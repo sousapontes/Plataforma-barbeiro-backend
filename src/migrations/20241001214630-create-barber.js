@@ -1,7 +1,7 @@
 'use strict';
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Barbers', {
       id: {
         allowNull: false,
@@ -10,8 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nome_barbeiro: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       localizacao_barbeiro: {
         type: Sequelize.STRING
@@ -25,7 +24,7 @@ module.exports = {
       data_nascimento: {
         type: Sequelize.DATE
       },
-      Link_Rede_Socias: {
+      link_rede_sociais: {
         type: Sequelize.STRING
       },
       especialidade: {
@@ -35,28 +34,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status_disponibilidade: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true
+        type: Sequelize.BOOLEAN
       },
       avaliacao_barbeiro: {
         type: Sequelize.FLOAT
       },
-      Imagem_Logo: {
+      imagem_logo: {
         type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
+  async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Barbers');
   }
 };
