@@ -10,31 +10,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       dia_realizacao_servico: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
+        type: Sequelize.DATEONLY
       },
       horario_servico: {
-        type: Sequelize.TIME,
-        allowNull: false
+        type: Sequelize.TIME
       },
       barbearia_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       barbeiro_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       cliente_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       status_agendamento: {
         type: Sequelize.STRING
       },
       data_agendamento: {
-        type: Sequelize.DATE,
-        allowNull: false
+        type: Sequelize.DATE
       },
       ultima_atualizacao: {
         type: Sequelize.DATE

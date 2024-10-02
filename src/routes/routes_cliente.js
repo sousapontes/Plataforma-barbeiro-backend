@@ -1,13 +1,21 @@
 const express = require('express');
-const routerCliente = express.Router();
+const router = express.Router();
+const clienteController = require('../controllers/cliente.controller');
+const { autenticarToken } = require('../middleware/auth');
 
-const clientes = require('../controllers/controllersCliente')
+// Lista todos os clientes cadastrados (admin)
+router.get('/clientes', autenticarToken, clienteController.getClientes);
 
+// Obtém detalhes de um cliente específico
+router.get('/cliente/:id', autenticarToken, clienteController.getClienteById);
 
-routerCliente.post('/cliente', clientes.cadastroCliente);
-routerCliente.get('/listaCliente', clientes.ListCliente);
-routerCliente.get('/atualizaCliente/:id', clientes.AtualizarCliente);
-routerCliente.delete('/deletarCliente/:id', clientes.deletarCliente);
-routerCliente.get('/historicoAgendamento/:id', clientes.historicoAgendamentos);
+// Cadastra um novo cliente
+router.post('/cliente', clienteController.createCliente);
 
-module.exports = routerCliente;
+// Atualiza as informações do cliente
+router.put('/cliente/:id', autenticarToken, clienteController.updateCliente);
+
+// Remove um cliente (admin)
+router.delete('/cliente/:id', autenticarToken, clienteController.deleteCliente);
+
+module.exports = router;

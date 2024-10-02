@@ -1,20 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken } = require('../Utils/jwt.js')
+const barbeiroController = require('../controllers/barbeiro.controller');
+const { autenticarToken } = require('../middleware/auth');
 
-const barbers = require('../controllers/controllers_Barbers')
+// Lista todos os barbeiros
+router.get('/barbeiros', barbeiroController.getBarbeiros);
 
-router.post('/cadastrarbarbeiro', barbers.NewBarbeiro);
+// Obtém um barbeiro específico
+router.get('/barbeiro/:id', barbeiroController.getBarbeiroById);
 
-/*
-router.get('/listarBarbeiro', barbers.listBarbeiro);
-router.put('/atualizarBarbeiro/:id', barbers.AtualizarBarbeiro);
-router.delete('/deletarBarbeiro/:id', barbers.DeleteBarbeiro);
-router.post('/login', barbers.login);
-router.get('/rota-protegida', verifyToken, (req, res) => {
-    res.json({ message: `Bem-vindo, ${req.barber.email}` });
-});
-*/
+// Cadastra um novo barbeiro (rota protegida)
+router.post('/barbeiro', autenticarToken, barbeiroController.createBarbeiro);
 
+// Atualiza dados de um barbeiro (rota protegida)
+router.put('/barbeiro/:id', autenticarToken, barbeiroController.updateBarbeiro);
+
+// Remove um barbeiro (rota protegida para admin)
+router.delete('/barbeiro/:id', autenticarToken, barbeiroController.deleteBarbeiro);
 
 module.exports = router;

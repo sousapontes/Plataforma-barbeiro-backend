@@ -10,20 +10,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tipo_servico: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
       },
       duracao_servico: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       preco_servico: {
-        type: Sequelize.DOUBLE,
-        allowNull: false
+        type: Sequelize.DOUBLE
       },
       ativo_inativo: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
