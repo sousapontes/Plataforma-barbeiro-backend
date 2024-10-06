@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const jwt = require('../middleware/auth');
 const { User } = require('../models');  // Ou caminho correto para a pasta de modelos
 
 
@@ -18,12 +18,16 @@ exports.login = async (req, res) => {
         const validPassword = await bcrypt.compare(password, users.password);
         if (!validPassword) return res.status(401).json({ message: 'Senha inválida' });
 
-        const token = jwt.sign({ id: users.id, role: users.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+       /* const token = jwt.sign({ id: users.id, role: users.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         return res.status(200).json({ token });
     } catch (error) {
-        return res.status(500).json({ message: 'Erro ao fazer login', error });
-    }
-};
+        return res.status(500).json({ message: 'Erro ao fazer login', error });*/
+        const token = jwt.generateToken(users);
+        return res.status(200).json({ token });
+    }catch (error) {
+      return res.status(500).json({ message: 'Erro ao fazer login', error });
+  };
+}
 
 // Função de registro
 exports.register = async (req, res) => {
@@ -77,4 +81,3 @@ exports.register = async (req, res) => {
 
     return res.status(200).json({ message: 'Logout realizado com sucesso' });
 };
-

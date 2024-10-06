@@ -6,6 +6,7 @@ const sendErrorResponse = (res, statusCode, message) => {
   return res.status(statusCode).json({ error: message });
 };
 
+
 // Middleware para autenticar o token
 const autenticarToken = (req, res, next) => {
   const token = req.headers['authorization'];
@@ -15,29 +16,50 @@ const autenticarToken = (req, res, next) => {
     return sendErrorResponse(res, 403, 'Token não fornecido');
   }
 
-  // Verificação do formato do token
+    //verifica se o token começa com a string "Bearer ".
   if (!token.startsWith('Bearer ')) {
     return sendErrorResponse(res, 400, 'Formato de token inválido');
   }
-
-  // Removendo o prefixo 'Bearer ' para obter o token puro
+  
+  //Se o token estiver no formato correto, o código extrai a parte do token que não inclui a string "Bearer "
   const tokenWithoutBearer = token.split(' ')[1];
-
-  // Verificação e decodificação do token
+  
+  // Verificação se o token é válido
   jwt.verify(tokenWithoutBearer, secretKey, (err, decoded) => {
+
+    console.log(tokenWithoutBearer);
+    console.log(secretKey);
+
     if (err) {
       return sendErrorResponse(res, 401, 'Token inválido');
     }
-    req.userId = decoded.sub; // Use 'sub' se for assim que você codifica o ID do usuário
+    req.userId = decoded.sub;
     next();
   });
+  
 };
+
 
 // Função para gerar um novo token
 const generateToken = (user) => {
-  const payload = { sub: user.id, name: user.nome }; // Use 'nome' se for o campo que armazena o nome do usuário
+  const payload = { sub: user.id, role: user.role }; // Use 'nome' se for o campo que armazena o nome do usuário
   return jwt.sign(payload, secretKey, { expiresIn: '1h' });
 };
 
+
+const checkRole = (roles) => {
+  return (req, res, next) => {
+    const userRole = req.user.role;  // Supondo que o papel do usuário esteja no req.user após a autenticação
+
+    if (!roles.includes(userRole)) {
+      return res.status(403).json({ message: 'Acesso negado: Permissão insuficiente.' });
+    }
+
+    next();
+  };
+};
+
+
+
 // Exportando as funções
-module.exports = { autenticarToken, generateToken };
+module.exports = { autenticarToken, generateToken, checkRole };

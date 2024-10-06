@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
-
 const sequelize = require('./models/index.js')
+const bodyParser = require('body-parser');
 
+// Middleware para tratar JSON
+app.use(bodyParser.json());
 require('dotenv').config();
 
 // listas de importações do arquivos de rotas

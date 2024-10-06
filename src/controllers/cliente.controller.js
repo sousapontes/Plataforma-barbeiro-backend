@@ -1,4 +1,5 @@
 const Cliente = require('../models/cliente');
+const User = require('../models/user');
 
 // Lista todos os clientes cadastrados
 exports.getClientes = async (req, res) => {
@@ -66,3 +67,32 @@ exports.deleteCliente = async (req, res) => {
         return res.status(500).json({ message: 'Erro ao remover cliente', error });
     }
 };
+
+// Função para atualizar a foto de perfil
+exports.updateFotoPerfil = async (req, res) => {
+    const { id } = req.params; // ID do cliente que deseja atualizar
+    const cliente = await Cliente.findByPk(id);
+    const existingUser = await User.findOne({ where: { id } });
+
+    if (!cliente || !existingUser) {
+      return res.status(404).json({ message: 'Cliente não encontrado.' });
+    }
+  
+    if (!req.file) {
+      return res.status(400).json({ message: 'Nenhuma foto enviada.' });
+    }
+  
+    try {
+      // Atualiza a URL da foto de perfil no banco de dados
+      cliente.foto_perfil = req.file.path; // Salva o caminho da imagem
+      await cliente.save();
+  
+      return res.status(200).json({
+        message: 'Foto de perfil atualizada com sucesso.',
+        cliente,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Erro ao atualizar foto de perfil.' });
+    }
+  };

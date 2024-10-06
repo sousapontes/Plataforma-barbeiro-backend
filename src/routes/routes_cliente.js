@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const clienteController = require('../controllers/cliente.controller');
 const { autenticarToken } = require('../middleware/auth');
+const { upload } = require('../middleware/uploaddearquivos');
+
 
 // Lista todos os clientes cadastrados (admin)
 router.get('/clientes', autenticarToken, clienteController.getClientes);
@@ -17,5 +19,7 @@ router.put('/cliente/:id', autenticarToken, clienteController.updateCliente);
 
 // Remove um cliente (admin)
 router.delete('/cliente/:id', autenticarToken, clienteController.deleteCliente);
+
+router.put('/:id/foto', upload.single('foto'), clienteController.updateFotoPerfil);
 
 module.exports = router;
