@@ -11,18 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Service.hasMany(models.Agendamento, { foreignKey: 'servico_id' });
-      Service.hasMany(models.Avaliacao, { foreignKey: 'servico_id', as: 'avaliacoes' });
     }
   }
   Service.init({
-    tipo_servico: DataTypes.STRING,
-    duracao_servico: DataTypes.INTEGER,
-    preco_servico: DataTypes.DOUBLE,
-    ativo_inativo: DataTypes.BOOLEAN
+    name: DataTypes.STRING,
+    decription: DataTypes.STRING,
+    price: DataTypes.INTEGER,
+    duration: DataTypes.STRING,
+    categoria: DataTypes.STRING,
+    barberShopId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Service',
+    timestamps:true
   });
   return Service;
 };

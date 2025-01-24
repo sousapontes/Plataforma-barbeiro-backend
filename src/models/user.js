@@ -10,19 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      /* define association here
+      this.belongsTo(models.User, {
+        foreignKey: 'ownerId',
+        as: 'owner'
+      });*/
     }
   }
   User.init({
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    role: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    dateOfBirth: DataTypes.DATE,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    role: DataTypes.ENUM('admin', 'user')
   }, {
+    timestamps:true,
     sequelize,
     modelName: 'User',
   });

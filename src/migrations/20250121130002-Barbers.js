@@ -1,19 +1,33 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Logins', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('Barbers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },
-      password: {
+      phone: {
         type: Sequelize.STRING
+      },
+      barberShopId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'BarberShops',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -25,7 +39,8 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Logins');
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('Barbers');
   }
 };

@@ -1,37 +1,39 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Clientes', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('Services', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name_cliente: {
+      name: {
         type: Sequelize.STRING
       },
-      email: {
+      decription: {
         type: Sequelize.STRING
       },
-      contacto_cliente: {
-        type: Sequelize.STRING
-      },
-      morada: {
-        type: Sequelize.STRING
-      },
-      data_nascimento: {
-        type: Sequelize.DATE
-      },
-      preferencia: {
-        type: Sequelize.STRING
-      },
-      avaliacao: {
+      price: {
         type: Sequelize.INTEGER
       },
-      password: {
+      duration: {
         type: Sequelize.STRING
+      },
+      categoria: {
+        type: Sequelize.STRING
+      },
+      barberShopId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'BarberShops',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -43,7 +45,8 @@ module.exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Clientes');
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('Services');
   }
 };
