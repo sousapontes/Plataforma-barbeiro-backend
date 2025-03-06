@@ -13,6 +13,19 @@ exports.getAgendamentos = async (req, res) => {
     }
 };
 
+getupdateStatus = async (req,res) =>{
+    const {id} = req.params
+    try{
+        const agendamento = await Agendamento.update({status: req.body.status}, {wher
+            : {id: req.params.id}})
+        
+            return res.status(200).json(agendamento)
+    }catch(error){
+                return res.status(500).json({message: 'Erro ao atualizar status', error})
+     }
+}
+
+
 /*/ Acompanhar agendamentos em tempo real
 //router.get('/temporeal/agendamentos',
 exports.AgendamentoTempoReal = async (req, res) => {
@@ -29,6 +42,32 @@ exports.AgendamentoTempoReal = async (req, res) => {
         res.status(500).json({ message: 'Erro ao buscar agendamentos.', error: err.message });
     }
 };*/
+
+//Verifica o status do agendamento
+exports.getAgendamentoStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const agendamento = await Agendamento.findOne({ where: { id }, include: [
+            { model: User, as: 'user' },
+            { model: Barber, as: 'barber' },
+            { model: Service, as: 'service' },
+            ] 
+        });
+            if (!agendamento) return res.status(404).json({ message: 'Agendamento'})
+            
+                if(agendamento.status ===pendente){
+                    agendamento.status = "pendente"
+                }else if(agendamento.status === concluido){
+                    agendamento.status = "concluido"
+                }else{
+                    agendamento.status = "cancelar"
+                }
+                res.status(200).json(agendamento)
+    } catch (error) {
+            return res.status(500).json({ message: 'Erro ao buscar agendamento', error})
+    }
+    };
+
 
 
 // Detalha um agendamento específico

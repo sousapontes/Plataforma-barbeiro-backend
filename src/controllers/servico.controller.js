@@ -1,6 +1,7 @@
 const {Service} = require('../models');
 const {Barbearia} = require('../models');
 
+
 // Lista todos os serviços padrão
 exports.getServicos = async (req, res) => {
     try {
@@ -10,6 +11,7 @@ exports.getServicos = async (req, res) => {
         return res.status(500).json({ message: 'Erro ao listar Dados', error });
     }
 };
+
 
 // Obtém uma serviço específico padrão
 exports.getServicoById = async (req, res) => {
@@ -23,13 +25,14 @@ exports.getServicoById = async (req, res) => {
     }
 };
 
+
 // Cria um novo serviço padrão
 exports.createServico = async (req, res) => {
     try {
-    const {  name, decription, price, duration, categoria, barberShopId, } = req.body;
+    const {  name, decription, price, duration, categoria,  } = req.body;
 
     // Validações
-    if ( !barberShopId || !name || !categoria || !decription || !price || !duration) {
+    if (  !name || !categoria || !decription || !price || !duration) {
         return res.status(400).json({ message: 'Preencha os campos obrigatórios.' });
     }
         const newServico = await Service.create({ name, categoria, decription, price, duration });
@@ -43,6 +46,7 @@ exports.createServico = async (req, res) => {
         return res.status(500).json({ message: 'Erro ao criar serviço', error });
     }
 };
+
 
 // Atualiza um serviço || Editar um serviço padrão
 exports.updateServico = async (req, res) => {
@@ -76,6 +80,7 @@ exports.updateServico = async (req, res) => {
     }
 };
 
+
 // Deleta um serviço padrão
 exports.deleteServico = async (req, res) => {
     try {
@@ -90,6 +95,10 @@ exports.deleteServico = async (req, res) => {
         return res.status(500).json({ message: 'Erro ao deletar dados, tente novamente mais tarde', error });
     }
 };
+
+
+
+
 
 // Configurar serviços específicos para uma barbearia
 //router.post('/barbearias/:barberShopId/servicos' 

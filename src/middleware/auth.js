@@ -30,10 +30,9 @@ const autenticarToken = (req, res, next) => {
   }
 };
 
-
 // Função para gerar um novo token
 const generateToken = (user) => {
-  const payload = { sub: user.id, name: user.nome, role:user.role }; // Use 'nome' se for o campo que armazena o nome do usuário
+  const payload = { sub: user.id, name: user.name, email: user.email, role:user.role }; // Use 'nome' se for o campo que armazena o nome do usuário
   return jwt.sign(payload, secretKey, { expiresIn: '1h' });
 };
 

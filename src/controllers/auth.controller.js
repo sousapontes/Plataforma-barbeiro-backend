@@ -126,6 +126,7 @@ exports.updateUtilizadores = async (req, res) => {
     }
 };
 
+
 // Deleta um utilizador
 exports.deleteUtilizadores = async (req, res) => {
     const { id } = req.params;
@@ -149,14 +150,19 @@ exports.landingPage = (req, res) => {
 // Função de logout (opcional)
 exports.logout = (req, res) => {
     try {
+        // Remove o cookie 'token' do navegador do cliente
         res.clearCookie('token', {
             httpOnly: true, // Garante que o cookie não seja acessado pelo JavaScript do cliente
-            secure: process.env.NODE_ENV !== 'development', // HTTPS apenas em produção
-            sameSite: 'strict', // Protege contra ataques CSRF
+            secure: process.env.NODE_ENV === 'production', // Garante que o cookie seja enviado apenas via HTTPS em produção
+            sameSite: 'strict', // Protege contra ataques CSRF (evita que o cookie seja enviado em requisições de outros sites)
         });
+
+        // Responde com uma mensagem de sucesso
         res.status(200).json({ message: 'Logout realizado com sucesso' });
     } catch (error) {
+        // Em caso de erro, responde com um código 500
         console.error('Erro ao realizar logout:', error);
         res.status(500).json({ message: 'Erro ao realizar logout', error: error.message });
     }
 };
+
